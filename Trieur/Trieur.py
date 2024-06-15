@@ -107,7 +107,7 @@ def Analyseur_Nom():
             termot_l.append('')  
 
 
-    #print(termot_l)
+
     first = []
     for i in termot_l:
         if i in first:
@@ -119,4 +119,6 @@ def Analyseur_Nom():
         
         if f > 1200:
             print(j)
+            
 Analyseur_Nom()
+#zizi
