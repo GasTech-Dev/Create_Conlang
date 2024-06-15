@@ -89,6 +89,7 @@ def annalyseur_nom():
     wb_langue.close()
     wb_nom.close()
 
+#Annalyse tout les nom et regarde nous donne qu'elle est la terminaison en commun dans chaques nom
 def Analyseur_Nom():
     name_ofFile = "Trieur/Nom_Franxois.xlsx"  # Fusionne les opérations pour éviter une erreur de chemin
     wb_langue = openpyxl.load_workbook(name_ofFile)
@@ -120,5 +121,28 @@ def Analyseur_Nom():
         if f > 1200:
             print(j)
             
-Analyseur_Nom()
-#zizi
+
+def Rectifieur():# Est utiliser si un nom a la mêmes terminaison qu'un verbe donc on rectifie ligne 136 on change re par la terminaison en commun
+    name_ofFile = "Trieur/Nom_Franxois.xlsx"  # Fusionne les opérations pour éviter une erreur de chemin
+    wb_langue = openpyxl.load_workbook(name_ofFile)
+    feuille_nom = wb_langue['Feuil1']
+    termot_l = []
+    
+    for row in range(1, feuille_nom.max_row + 1):
+        mot = feuille_nom.cell(row=row, column=1).value
+        
+        
+        if mot is not None:
+            termot = mot[-2:]
+            if termot == "re":
+                mot = mot[:-2] + "po"
+                feuille_nom.cell(row=row, column=1).value = mot
+            termot = mot[-2:] 
+            termot_l.append(termot)
+            
+        else:
+           
+            termot_l.append('')  
+    print("Ok")
+    wb_langue.save("Trieur/Nom_Franxois.xlsx")
+    wb_langue.close()
