@@ -2,7 +2,13 @@ import openpyxl
 
 from deep_translator import GoogleTranslator
 import os
+import random
 # Ouvrir le fichier Excel
+
+#crée une liste avec les consomne
+consonants = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z']
+vowels = ['a', 'e', 'i', 'o', 'u']
+
 def translate():
     wb = openpyxl.load_workbook('français.xlsx')
     rowe = 1
@@ -43,23 +49,19 @@ def New_File():
     aci = new_file.active
     aci['C7'] = "Bonjour"
     new_file.save(namexlsx)
-    # Ouvrir les fichiers Excel
-    #wb_fichier1 = openpyxl.load_workbook('espanol.xlsx')
-    #wb_fichier2 = openpyxl.load_workbook('Bite.xlsx')
+
     wb_français = openpyxl.load_workbook('français.xlsx')
     spanglish = openpyxl.load_workbook(namexlsx)
-    #wb_allemnd = openpyxl.load_workbook('allemend.xlsx')
+
     wb_file = openpyxl.load_workbook("New_File2.xlsx")
     wb_file2 = openpyxl.load_workbook("New_File3.xlsx")
-    # Sélectionner les feuil
-    # les de calcul à utiliser
-    #feuille_fichier1 = wb_fichier1['Sheet']
-    #feuille_fichier2 = wb_fichier2['Sheet']
+
     feuille_français = wb_français['Feuille1']
     f_spanglish = spanglish['Sheet']
     #f_allemend = wb_allemnd['Sheet']
     f_file = wb_file['Sheet']
     f_file2 = wb_file2['Sheet']
+    compteur = 1
     for cellule in feuille_français['A']:
         mot_a_chercher = cellule.value
         if mot_a_chercher == None:
@@ -75,9 +77,7 @@ def New_File():
                     cellule_fichier2 = f_file.cell(row=row2, column=1)
                     if cellule_fichier2.value == mot_a_chercher:
                         français = feuille_français.cell(row=row, column=1).value
-                        #espagnol = feuille_fichier1.cell(row=row, column=2).value
-                        #anglais = feuille_fichier2.cell(row=row, column=2).value
-                        #allemend = f_allemend.cell(row=row, column=2).value
+
                         new_langue = f_file.cell(row=row, column=2).value
                         new_langue2 = f_file2.cell(row=row, column=2).value
                         # Formater le mot
@@ -97,8 +97,16 @@ def New_File():
                                 new_word = new_langue2[-2:]
                             else:
                                 new_word = new_langue2[-3:]
+                        termNW = new_world[:-1]
+                        if new_world[-1] == new_word[0]:
+                            if new_world[-1] == "i":
+                                   new_world = new_world[:-1] + "y"
+                            new_world = new_world[:-1]
+                    
                         very_new_word = new_world + new_word
+                        compteur = 0
                         
+                        very_new_word = very_new_word.lower()
                         # Écrire le mot formaté dans le fichier Spanglish.xlsx
                         f_spanglish.cell(row=row, column=2).value = very_new_word
                         f_spanglish.cell(row=row, column=1).value = français
@@ -111,7 +119,7 @@ def New_File():
 
         else:
             print(f"Le mot '{mot_a_chercher}' n'a pas été trouvé dans fichier1.xlsx.")
-
+        compteur += 1
 
     # Créer le dossier "robe" s'il n'existe pas déjà
 
