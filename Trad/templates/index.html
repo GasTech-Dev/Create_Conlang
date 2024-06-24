@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traducteur</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex min-h-screen items-center justify-center bg-gray-50">
+  <div class="text-center">
+    <!-- Message centré -->
+    <h1 class="text-3xl font-bold text-pink-500 mb-6">{{ message }}</h1>
+    
+    <!-- Formulaire centré -->
+    <form action="/traduct" method="post" class="bg-white p-8 rounded-xl shadow-lg">
+      <h4 class="text-2xl font-semibold text-blue-gray-900 mb-4">
+        Traduis ton mot en franxois
+      </h4>
+      <p class="text-base text-gray-700 mb-6">
+        Entre le mot dans le champ, il sera affiché en dessous
+      </p>
+      <div class="mb-6">
+        <div class="relative h-11 w-full">
+          <input
+            name="data"
+            type="text"
+            class="peer h-full w-full rounded-md border border-blue-gray-200 bg-transparent px-3 py-3 text-sm text-blue-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-pink-500 focus:border-t-transparent"
+            placeholder=" "
+          />
+          <label class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.1] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-pink-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-pink-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+            Mot français
+          </label>
+        </div>
+      </div>
+      
+      <button
+        class="w-full rounded-lg bg-pink-500 py-3 px-6 text-center text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-85 focus:shadow-none active:opacity-85 active:shadow-none"
+        type="submit"
+      >
+        Send
+      </button>
+    </form>
+  </div>
+
+  <!-- stylesheet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css"
+  />
+
+  <!-- from cdn -->
+  <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script>
+</body>
+</html>
