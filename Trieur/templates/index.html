@@ -22,17 +22,27 @@
             top: 525px;
             left: 750px;
         }
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center; /* Centre horizontalement */
+            align-items: center;    /* Centre verticalement */
+            background-color: #f0f0f0;
+        }
     </style>
 </head>
 <body>
-    <input type="text" placeholder="Le verbe a l'infinitif" id="input" class="input input-bordered input-accent w-full max-w-xs" />
-    <select id="box" class="select select-secondary w-full max-w-xs">
-        <option disabled selected>Selctionne le Temps</option>
-        <option>Parfait</option>
-        <option>Passél</option>
-        <option>Présent</option>
-        <option>Futuro</option>
-    </select>
-    <button id="button_send" class="btn btn-secondary">Secondary</button>
+    <form action="/conjgue" method="post">
+        <input name="verbe" type="text" placeholder="Le verbe a l'infinitif" id="input" class="input input-bordered input-accent w-full max-w-xs" />
+        <select name="temps" id="box" class="select select-secondary w-full max-w-xs">
+            <option disabled selected>Selctionne le Temps</option>
+            <option>Parfait</option>
+            <option>Passél</option>
+            <option>Présent</option>
+            <option>Futuro</option>
+        </select>
+        <button id="button_send" class="btn btn-secondary">Secondary</button>
+    </form>
 </body>
 </html>

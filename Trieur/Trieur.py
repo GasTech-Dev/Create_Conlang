@@ -92,7 +92,7 @@ class Verbe():
                     print(mot)
                     feuille_verbe.cell(row=row, column=1).value = mot
                     #[:-1]
-        wb_langue.save("Trieur/Verbe_Conjuguer.xlsx")
+        wb_langue.save("Trieur/verbe_rectifier.xlsx")
         wb_langue.close()
 class Nom():
     def annalyseur_nom():
@@ -162,4 +162,4 @@ class Nom():
 
         wb_langue.save("Trieur/Nom_Franxois.xlsx")
         wb_langue.close()
-Verbe.trieur()
+Verbe.Rectifieur()
