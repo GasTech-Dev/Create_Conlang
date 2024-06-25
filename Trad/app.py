@@ -4,7 +4,7 @@ from deep_translator import GoogleTranslator
 
 
 def traducteur(motAtraduire):
-    name_ofFile = "Franx"#Marquer Le nom de la langue
+    name_ofFile = "GrecToumoul"#Marquer Le nom de la langue
 
     name_ofFile = name_ofFile + ".xlsx"
     chemin_fichier =name_ofFile
