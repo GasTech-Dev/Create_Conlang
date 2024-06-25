@@ -96,12 +96,12 @@ class Verbe():
         wb_langue.close()
 class Nom():
     def trieur():
-        name_ofFile = "Trieur/Nom_Franxois"#Marquer Le nom de la langue
+        name_ofFile = "Trieur/GrecToumoul"#Marquer Le nom de la langue
 
         name_ofFile = name_ofFile + ".xlsx"
         chemin_fichier =name_ofFile
         wb_langue = openpyxl.load_workbook(chemin_fichier)
-        wb_nom = openpyxl.load_workbook("Trieur/Nom_Franxois.xlsx")
+        wb_nom = openpyxl.load_workbook("Trieur/Nom_Toumoul.xlsx")
         feuille_langue = wb_langue['Sheet']
         feuille_nom = wb_nom['Feuil1']
         
@@ -123,13 +123,13 @@ class Nom():
                     i += 1
 
 
-        wb_nom.save("Trieur/Nom_Franxois.xlsx")
+        wb_nom.save("Trieur/Nom_Toumoul.xlsx")
         wb_langue.close()
         wb_nom.close()
 
     #Annalyse tout les nom et regarde nous donne qu'elle est la terminaison en commun dans chaques nom
     def Analyseur():
-        name_ofFile = "Trieur/Nom_Franxois.xlsx"  # Fusionne les opérations pour éviter une erreur de chemin
+        name_ofFile = "Trieur/Nom_Toumoul.xlsx"  # Fusionne les opérations pour éviter une erreur de chemin
         wb_langue = openpyxl.load_workbook(name_ofFile)
         feuille_verbe = wb_langue['Feuil1']
         termot_l = []
@@ -156,14 +156,14 @@ class Nom():
         for j in first:
             f = termot_l.count(j)
             
-            if f > 1200:
+            if f > 5:
                 print(j)
                 
 
-        wb_langue.save("Trieur/Nom_Franxois.xlsx")
+        wb_langue.save("Trieur/Nom_Toumoul.xlsx")
         wb_langue.close()
     def Rectifieur():
-        name_ofFile = "Trieur/Nom_Franxois.xlsx"  # Fusionne les opérations pour éviter une erreur de chemin
+        name_ofFile = "Trieur/Nom_Toumoul.xlsx"  # Fusionne les opérations pour éviter une erreur de chemin
         wb_langue = openpyxl.load_workbook(name_ofFile)
         feuille_verbe = wb_langue['Feuil1']
         termot_l = []
@@ -191,7 +191,7 @@ class Nom():
         for j in first:
             f = termot_l.count(j)
             
-            if f > 1200:
+            if f > 5:
                 print(j)
                 terminaison.append(j)
         for row in range(1, feuille_verbe.max_row + 1):
@@ -203,6 +203,6 @@ class Nom():
                     mot = mot[:-2] + random.choice(terminaison)
                     feuille_verbe.cell(row=row, column=1).value = mot
 
-        wb_langue.save("Trieur/Nom_Rectifier.xlsx")
+        wb_langue.save("Trieur/Nom_RectifierT.xlsx")
         wb_langue.close()
 Nom.Rectifieur()

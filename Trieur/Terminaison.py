@@ -77,22 +77,5 @@ def Groupe1():
                 conpteur += 1
             conpteur += 3
             
-    wb_conjugue.save("Trieur\Verbe_Conjuguer.xlsx")
-app = Flask(__name__)
-
-@app.route('/traduct', methods=['GET', 'POST'])
-def traduct():
-    if request.method == 'POST':
-        # Traitez le formulaire POST
-        data = request.form.get('data')
-        trad = traducteur(data)
-        return render_template('index.html', message=f"Mot traduit: {trad}")
-    else:
-        # Affichez simplement la page avec un message par défaut pour GET
-        return render_template('index.html', message="Entrez un mot pour le traduire.")
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    wb_conjugue.save("Trieur\Verbe_T.xlsx")
+Creator()

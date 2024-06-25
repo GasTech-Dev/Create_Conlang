@@ -1,5 +1,5 @@
 import openpyxl
-
+from unidecode import unidecode
 from deep_translator import GoogleTranslator
 import os
 import random
@@ -30,6 +30,7 @@ def translate():
                     text_to_translate = cell.value.replace(' ', '_') # Remplacer les espaces par des underscores
                     # Traduction du texte en français
                     translation = GoogleTranslator(source="auto", target=langue).translate(text_to_translate)
+                    translation = unidecode(translation)
                     new_sheet.cell(row=row[0].row, column=2).value = translation # Écrire le résultat dans la colonne B du nouveau fichier
                     new_sheet.cell(row=row[0].row, column=1).value = text_to_translate
                     print(translation)
