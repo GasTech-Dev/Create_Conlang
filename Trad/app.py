@@ -1,10 +1,10 @@
 import openpyxl
 from flask import Flask, request, render_template
 from deep_translator import GoogleTranslator
-
+from unidecode import unidecode
 
 def traducteur(motAtraduire):
-    name_ofFile = "Franx"#Marquer Le nom de la langue
+    name_ofFile = "GrecToumoul"#Marquer Le nom de la langue
 
     name_ofFile = name_ofFile + ".xlsx"
     chemin_fichier =name_ofFile
@@ -29,8 +29,10 @@ def traducteur(motAtraduire):
 
         print(mottr)
     if mottr == "" or mottr == " ":
-        translation_deux = GoogleTranslator(source="auto", target="es").translate(mot)
-        translation_un = GoogleTranslator(source="auto", target="it").translate(mot)
+        translation_deux = GoogleTranslator(source="auto", target="el").translate(mot)
+        translation_un = GoogleTranslator(source="auto", target="ta").translate(mot)
+        translation_deux = unidecode(translation_deux)
+        translation_un = unidecode(translation_un)
         print(translation_un)
         print(translation_deux)
         if len(translation_un) <= 2:
