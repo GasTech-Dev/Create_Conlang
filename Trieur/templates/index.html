@@ -1,48 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html data-theme="cupcake" lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daysi Project</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.7/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+NG+Modern:wght@100..400&display=swap" rel="stylesheet">
     <style>
-        #input {
-            position: absolute;
-            top: 375px;
-            left: 750px;
-        }
-        #box{
-            position: absolute;
-            top: 450px;
-            left: 750px;
-        }
-        #button_send{
-            position: absolute;
-            top: 525px;
-            left: 750px;
-        }
+
         body {
             margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center; /* Centre horizontalement */
-            align-items: center;    /* Centre verticalement */
-            background-color: #f0f0f0;
+
         }
+        #trie{
+            position: absolute;
+            left: 250px;
+            top: 250px;
+        }
+        #annalyse{
+            position: absolute;
+            left: 750px;
+            top: 250px;
+        }
+        #rectifie{
+            position: absolute;
+            left: 1250px;
+            top: 250px;
+        }
+        #trie2{
+            position: absolute;
+            left: 250px;
+            top: 550px;
+        }
+        #annalyse2{
+            position: absolute;
+            left: 750px;
+            top: 550px;
+        }
+        #rectifie2{
+            position: absolute;
+            left: 1250px;
+            top: 550px;
+        }
+        /* Container that holds the select element */
+        .container {
+            position: absolute;
+            left: 750px;
+            top: 100px;
+        }
+
     </style>
 </head>
 <body>
-    <form action="/conjgue" method="post">
-        <input name="verbe" type="text" placeholder="Le verbe a l'infinitif" id="input" class="input input-bordered input-accent w-full max-w-xs" />
-        <select name="temps" id="box" class="select select-secondary w-full max-w-xs">
-            <option disabled selected>Selctionne le Temps</option>
-            <option>Parfait</option>
-            <option>Passél</option>
-            <option>Présent</option>
-            <option>Futuro</option>
-        </select>
-        <button id="button_send" class="btn btn-secondary">Secondary</button>
+    <form action="your_server_endpoint" method="post">
+        <div class="container">
+            <input type="text" name="language" placeholder="Nom de la langue" class="input input-bordered w-full max-w-xs" />
+        </div>
+
+        <div id="trie" class="card bg-primary text-primary-content bg-teal-400 w-96 shadow-lg shadow-2xl shadow-gray-700 hover:bg-teal-500">
+            <div class="card-body">
+              <h2 class="card-title">Trie Verbe</h2>
+              <p>Pour séparé les verbe des autres fichier. Puis annalyser les terminaison et ensuite rectifier.</p>
+              <div class="card-actions justify-end">
+                <button type="submit" name="action" value="trier_verbe" class="btn">Trier</button>
+              </div>
+            </div>
+        </div>
+
+        <div id="annalyse" class="card bg-primary text-primary-content bg-red-400 w-96 shadow-lg shadow-2xl shadow-gray-700 hover:bg-red-500">
+            <div class="card-body">
+              <h2 class="card-title">Annalyse Verbe</h2>
+              <p>Pour annalyser les terminaison savoir y'a combien de groupe et ensuite pouvoir rectifier.</p>
+              <div class="card-actions justify-end">
+                <button type="submit" name="action" value="analyser_verbe" class="btn">Annalyser</button>
+              </div>
+            </div>
+        </div>      
+
+        <div id="rectifie" class="card bg-primary text-primary-content bg-cyan-300 w-96 shadow-2xl shadow-gray-700 hover:bg-cyan-500">
+            <div class="card-body">
+              <h2 class="card-title">Rectifie Verbe</h2>
+              <p>Pour rectifier éviter qu'il y'est trop de verbe irégulier </p>
+              <div class="card-actions justify-end">
+                <button type="submit" name="action" value="rectifier_verbe" class="btn">Rectifier</button>
+              </div>
+            </div>
+        </div>
+
+        <div id="trie2" class="card bg-primary text-primary-content bg-teal-400 w-96 shadow-2xl shadow-gray-700 hover:bg-teal-500">
+            <div class="card-body">
+              <h2 class="card-title">Trie Nom</h2>
+              <p>Pour séparé les verbe des autres fichier. Puis annalyser les terminaison et ensuite rectifier.</p>
+              <div class="card-actions justify-end">
+                <button type="submit" name="action" value="trier_nom" class="btn">Trier</button>
+              </div>
+            </div>
+        </div>
+
+        <div id="annalyse2" class="card bg-primary text-primary-content bg-red-400 w-96 shadow-2xl shadow-gray-700 hover:bg-red-500">
+            <div class="card-body">
+              <h2 class="card-title">Annalyse Nom</h2>
+              <p>Pour annalyser les terminaison savoir y'a combien de groupe et ensuite pouvoir rectifier.</p>
+              <div class="card-actions justify-end">
+                <button type="submit" name="action" value="analyser_nom" class="btn">Annalyser</button>
+              </div>
+            </div>
+        </div>      
+
+        <div id="rectifie2" class="card bg-primary text-primary-content bg-cyan-300 w-96 shadow-2xl shadow-gray-700 hover:bg-cyan-500">
+            <div class="card-body">
+              <h2 class="card-title">Rectifie Nom</h2>
+              <p>Pour rectifier éviter qu'il y'est trop de verbe irégulier </p>
+              <div class="card-actions justify-end">
+                <button type="submit" name="action" value="rectifier_nom" class="btn">Rectifier</button>
+              </div>
+            </div>
+        </div>
     </form>
 </body>
 </html>
