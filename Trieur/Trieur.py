@@ -3,15 +3,16 @@ from flask import Flask, request, render_template
 import random
 
 class Verbe():
-    def trieur():
-        name_ofFile = "Trieur/Franx"#Marquer Le nom de la langue
-
+    def trieur(lang):
+        #name_ofFile = "Trieur/Franx"#Marquer Le nom de la langue
+        name_ofFile = lang
         name_ofFile = name_ofFile + ".xlsx"
         chemin_fichier =name_ofFile
         wb_langue = openpyxl.load_workbook(chemin_fichier)
-        wb_verbe = openpyxl.load_workbook("Trieur/Verbe_Franxois.xlsx")
+        #wb_verbe = openpyxl.load_workbook("Trieur/Verbe_Franxois.xlsx")
+        wb_verbe = openpyxl.Workbook()
         feuille_langue = wb_langue['Sheet']
-        feuille_verbe = wb_verbe['Feuil1']
+        feuille_verbe = wb_verbe['Sheet']
         
         mottr = ""
         i = 1
@@ -30,14 +31,19 @@ class Verbe():
                     i += 1
                         
 
-        wb_verbe.save("Trieur/Verbe_Franxois.xlsx")
+        wb_verbe.save("Verbe_" + lang + ".xlsx")
         wb_langue.close()
         wb_verbe.close()
-    def Analyseur():
-        name_ofFile = "Trieur/Verbe_Franxois"#Marquer Le nom de la langue
+    def Analyseur(lang):
+        #name_ofFile = "Trieur/Verbe_Franxois"#Marquer Le nom de la langue
+        print(lang)
+        name_ofFile = 'Verbe_' + lang
         name_ofFile = name_ofFile + ".xlsx"
         wb_langue = openpyxl.load_workbook(name_ofFile)
-        feuille_verbe = wb_langue['Feuil1']
+        try:
+            feuille_verbe = wb_langue['Sheet']
+        except:
+            feuille_verbe = wb_langue['Feuil1']
         termot_l = []
         for row in range(1, feuille_verbe.max_row + 1):
             mot = feuille_verbe.cell(row=row, column=1).value
@@ -56,11 +62,15 @@ class Verbe():
             
             if f > 80:
                 print(i)
-    def Rectifieur():
-        name_ofFile = "Trieur/Verbe_Franxois"#Marquer Le nom de la langue
+    def Rectifieur(lang):
+        #name_ofFile = "Trieur/Verbe_Franxois"#Marquer Le nom de la langue
+        name_ofFile = 'Verbe_' + lang
         name_ofFile = name_ofFile + ".xlsx"
         wb_langue = openpyxl.load_workbook(name_ofFile, data_only=True)
-        feuille_verbe = wb_langue['Feuil1']
+        try:
+            feuille_verbe = wb_langue['Feuil1']
+        except:
+            feuille_verbe = wb_langue['Sheet']
         termot_l = []
         for row in range(1, feuille_verbe.max_row + 1):
             mot = feuille_verbe.cell(row=row, column=1).value
@@ -92,18 +102,21 @@ class Verbe():
                     print(mot)
                     feuille_verbe.cell(row=row, column=1).value = mot
                     #[:-1]
-        wb_langue.save("Trieur/verbe_rectifier.xlsx")
+        wb_langue.save("verbe_rectifier_" + lang + ".xlsx")
         wb_langue.close()
 class Nom():
-    def trieur():
-        name_ofFile = "Trieur/Nom_Franxois"#Marquer Le nom de la langue
-
+    def trieur(lang):
+        #name_ofFile = "Trieur/Nom_Franxois"#Marquer Le nom de la langue
+        name_ofFile = lang
         name_ofFile = name_ofFile + ".xlsx"
         chemin_fichier =name_ofFile
         wb_langue = openpyxl.load_workbook(chemin_fichier)
-        wb_nom = openpyxl.load_workbook("Trieur/Nom_Franxois.xlsx")
+        wb_nom = openpyxl.Workbook()
         feuille_langue = wb_langue['Sheet']
-        feuille_nom = wb_nom['Feuil1']
+        try:
+            feuille_nom = wb_nom['Feuil1']
+        except:
+            feuille_nom = wb_nom['Sheet']
         
         mottr = ""
         i = 1
@@ -123,15 +136,19 @@ class Nom():
                     i += 1
 
 
-        wb_nom.save("Trieur/Nom_Franxois.xlsx")
+        wb_nom.save("Nom_" + lang + ".xlsx")
         wb_langue.close()
         wb_nom.close()
 
     #Annalyse tout les nom et regarde nous donne qu'elle est la terminaison en commun dans chaques nom
-    def Analyseur():
-        name_ofFile = "Trieur/Nom_Franxois.xlsx"  # Fusionne les opérations pour éviter une erreur de chemin
+    def Analyseur(lang):
+        #name_ofFile = "Trieur/Nom_Franxois.xlsx"  # Fusionne les opérations pour éviter une erreur de chemin
+        name_ofFile = 'Nom_' + lang + ".xlsx"
         wb_langue = openpyxl.load_workbook(name_ofFile)
-        feuille_verbe = wb_langue['Feuil1']
+        try:
+            feuille_verbe = wb_langue['Feuil1']
+        except:
+            feuille_verbe = wb_langue['Sheet']
         termot_l = []
         
         for row in range(1, feuille_verbe.max_row + 1):
@@ -160,10 +177,11 @@ class Nom():
                 print(j)
                 
 
-        wb_langue.save("Trieur/Nom_Franxois.xlsx")
+        wb_langue.save(name_ofFile)
         wb_langue.close()
-    def Rectifieur():
-        name_ofFile = "Trieur/Nom_Franxois.xlsx"  # Fusionne les opérations pour éviter une erreur de chemin
+    def Rectifieur(lang):
+        #name_ofFile = "Trieur/Nom_Franxois.xlsx"  # Fusionne les opérations pour éviter une erreur de chemin
+        name_ofFile = 'Nom_' + lang + ".xlsx"
         wb_langue = openpyxl.load_workbook(name_ofFile)
         feuille_verbe = wb_langue['Feuil1']
         termot_l = []
@@ -205,4 +223,34 @@ class Nom():
 
         wb_langue.save("Trieur/Nom_Rectifier.xlsx")
         wb_langue.close()
-Nom.Rectifieur()
+app = Flask(__name__)
+
+@app.route('/trie', methods=['POST'])
+def traduct():
+    if request.method == 'POST':
+
+        language = request.form.get('language')
+        action = request.form.get('action')
+        if action == "tv":
+            Verbe.trieur(language)
+        elif action == "tn":
+            Nom.trieur(language)
+        elif action == "av":
+            Verbe.Analyseur(language)
+        elif action == "an":
+            Nom.Analyseur(language)
+        elif action == "rv":
+            Verbe.Rectifieur(language)
+        elif action == "rn":
+            Nom.Rectifieur(language)
+
+        return render_template('index.html')
+    else:
+
+        return render_template('index.html')
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
