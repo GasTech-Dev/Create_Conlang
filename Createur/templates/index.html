@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html data-theme="cupcake" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.7/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+NG+Modern:wght@100..400&display=swap" rel="stylesheet">
+    <style>
+        body{
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center; /* Centre horizontalement */
+            align-items: center;
+        }
+        #Basic-Input {
+            position: absolute;
+
+        }
+        #cool {
+            margin-top: 50px;
+        }
+        #booton{
+          display: flex;
+          justify-content: center; /* Centre horizontalement */
+          align-items: center;
+          margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="Basic-Input" class="card bg-base-100 w-96 shadow-xl">
+        <figure class="px-10 pt-10">
+          <img
+            src="https://www.code-couleur.com/images/main/header2020/drapeau.jpg"
+            alt="Shoes"
+            class="rounded-xl" />
+        </figure>
+        <div class="card-body items-center text-center">
+          <form action="URL_DE_VOTRE_SERVEUR" method="post">
+            <input type="text" name="etimologie1" placeholder="étimologie de la langue" class="input input-bordered input-info w-full max-w-xs" />
+            <input id="cool" type="text" name="etimologie2" placeholder="étimologie de la langue" class="input input-bordered input-info w-full max-w-xs" />
+            <input id="cool" type="text" name="nom_langue" placeholder="Nom de langue" class="input input-bordered input-info w-full max-w-xs" />
+            <div class="card-actions" id="booton">
+              <button type="submit" class="btn btn-primary">Générer la langue</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      
+</body>
+</html>

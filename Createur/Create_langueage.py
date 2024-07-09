@@ -1,6 +1,7 @@
 import openpyxl
 from unidecode import unidecode
 from deep_translator import GoogleTranslator
+from flask import Flask, request, render_template
 import os
 import random
 # Ouvrir le fichier Excel
@@ -129,6 +130,24 @@ def New_File():
 
 translate()
 
-
 New_File()
 
+app = Flask(__name__)
+
+@app.route('/create', methods=['POST'])
+def traduct():
+    if request.method == 'POST':
+
+        etimologie1 = request.form.get('etimologie1')
+        etimologie2 = request.form.get('etimologie2')
+        
+        return render_template('index.html')
+    else:
+
+        return render_template('index.html')
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
