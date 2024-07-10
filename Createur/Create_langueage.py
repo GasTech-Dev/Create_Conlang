@@ -2,6 +2,7 @@ import openpyxl
 from unidecode import unidecode
 from deep_translator import GoogleTranslator
 from flask import Flask, request, render_template
+from waitress import serve
 import os
 import random
 # Ouvrir le fichier Excel
@@ -10,16 +11,68 @@ import random
 consonants = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z']
 vowels = ['a', 'e', 'i', 'o', 'u']
 
-def translate():
-    wb = openpyxl.load_workbook('français.xlsx')
+def langue_to_acronyme(langue):
+    print("début languetoacr")
+    languages_str = """
+    'afrikaans': 'af', 'albanian': 'sq', 'amharic': 'am', 'arabic': 'ar', 'armenian': 'hy', 
+    'assamese': 'as', 'aymara': 'ay', 'azerbaijani': 'az', 'bambara': 'bm', 'basque': 'eu', 
+    'belarusian': 'be', 'bengali': 'bn', 'bhojpuri': 'bho', 'bosnian': 'bs', 'bulgarian': 'bg', 
+    'catalan': 'ca', 'cebuano': 'ceb', 'chichewa': 'ny', 'chinese': 'zh-CN', 
+    'chinese': 'zh-TW', 'corsican': 'co', 'croatian': 'hr', 'czech': 'cs', 
+    'danish': 'da', 'dhivehi': 'dv', 'dogri': 'doi', 'dutch': 'nl', 'english': 'en', 
+    'esperanto': 'eo', 'estonian': 'et', 'ewe': 'ee', 'filipino': 'tl', 'finnish': 'fi', 
+    'french': 'fr', 'frisian': 'fy', 'galician': 'gl', 'georgian': 'ka', 'german': 'de', 
+    'greek': 'el', 'guarani': 'gn', 'gujarati': 'gu', 'haitian creole': 'ht', 'hausa': 'ha', 
+    'hawaiian': 'haw', 'hebrew': 'iw', 'hindi': 'hi', 'hmong': 'hmn', 'hungarian': 'hu', 
+    'icelandic': 'is', 'igbo': 'ig', 'ilocano': 'ilo', 'indonesian': 'id', 'irish': 'ga', 
+    'italian': 'it', 'japanese': 'ja', 'javanese': 'jw', 'kannada': 'kn', 'kazakh': 'kk', 
+    'khmer': 'km', 'kinyarwanda': 'rw', 'konkani': 'gom', 'korean': 'ko', 'krio': 'kri', 
+    'kurdish': 'ku', 'kurdish': 'ckb', 'kyrgyz': 'ky', 'lao': 'lo', 
+    'latin': 'la', 'latvian': 'lv', 'lingala': 'ln', 'lithuanian': 'lt', 'luganda': 'lg', 
+    'luxembourgish': 'lb', 'macedonian': 'mk', 'maithili': 'mai', 'malagasy': 'mg', 
+    'malay': 'ms', 'malayalam': 'ml', 'maltese': 'mt', 'maori': 'mi', 'marathi': 'mr', 
+    'meiteilon': 'mni-Mtei', 'mizo': 'lus', 'mongolian': 'mn', 'myanmar': 'my', 
+    'nepali': 'ne', 'norwegian': 'no', 'odia': 'or', 'oromo': 'om', 'pashto': 'ps', 
+    'persian': 'fa', 'polish': 'pl', 'portuguese': 'pt', 'punjabi': 'pa', 'quechua': 'qu', 
+    'romanian': 'ro', 'russian': 'ru', 'samoan': 'sm', 'sanskrit': 'sa', 'scots gaelic': 'gd', 
+    'sepedi': 'nso', 'serbian': 'sr', 'sesotho': 'st', 'shona': 'sn', 'sindhi': 'sd', 
+    'sinhala': 'si', 'slovak': 'sk', 'slovenian': 'sl', 'somali': 'so', 'spanish': 'es', 
+    'sundanese': 'su', 'swahili': 'sw', 'swedish': 'sv', 'tajik': 'tg', 'tamil': 'ta', 
+    'tatar': 'tt', 'telugu': 'te', 'thai': 'th', 'tigrinya': 'ti', 'tsonga': 'ts', 
+    'turkish': 'tr', 'turkmen': 'tk', 'twi': 'ak', 'ukrainian': 'uk', 'urdu': 'ur', 
+    'uyghur': 'ug', 'uzbek': 'uz', 'vietnamese': 'vi', 'welsh': 'cy', 'xhosa': 'xh', 
+    'yiddish': 'yi', 'yoruba': 'yo', 'zulu': 'zu'
+    """
+
+    # Conversion de la chaîne en dictionnaire
+    languages_dict = eval("{" + languages_str + "}")
+
+    # Demander à l'utilisateur de saisir un nom de langue
+
+
+    # Vérification et affichage du résultat
+    result = languages_dict.get(langue, "Langue non trouvée")
+    print("fin languetoacr")
+    return result
+def translate(langue, langue2):
+    print("début translate")
+    wb = openpyxl.load_workbook('Createur/français.xlsx')
     rowe = 1
     # Sélectionner la feuille de calcul à utiliser
     for i in range(2):
         sheet = wb['Feuille1']
         print("afrikaans': 'af', 'albanian': 'sq', 'amharic': 'am', 'arabic': 'ar', 'armenian': 'hy', 'assamese': 'as', 'aymara': 'ay', 'azerbaijani': 'az', 'bambara': 'bm', 'basque': 'eu', 'belarusian': 'be', 'bengali': 'bn', 'bhojpuri': 'bho', 'bosnian': 'bs', 'bulgarian': 'bg', 'catalan': 'ca', 'cebuano': 'ceb', 'chichewa': 'ny', 'chinese (simplified)': 'zh-CN', 'chinese (traditional)': 'zh-TW', 'corsican': 'co', 'croatian': 'hr', 'czech': 'cs', 'danish': 'da', 'dhivehi': 'dv', 'dogri': 'doi', 'dutch': 'nl', 'english': 'en', 'esperanto': 'eo', 'estonian': 'et', 'ewe': 'ee', 'filipino': 'tl', 'finnish': 'fi', 'french': 'fr', 'frisian': 'fy', 'galician': 'gl', 'georgian': 'ka', 'german': 'de', 'greek': 'el', 'guarani': 'gn', 'gujarati': 'gu', 'haitian creole': 'ht', 'hausa': 'ha', 'hawaiian': 'haw', 'hebrew': 'iw', 'hindi': 'hi', 'hmong': 'hmn', 'hungarian': 'hu', 'icelandic': 'is', 'igbo': 'ig', 'ilocano': 'ilo', 'indonesian': 'id', 'irish': 'ga', 'italian': 'it', 'japanese': 'ja', 'javanese': 'jw', 'kannada': 'kn', 'kazakh': 'kk', 'khmer': 'km', 'kinyarwanda': 'rw', 'konkani': 'gom', 'korean': 'ko', 'krio': 'kri', 'kurdish (kurmanji)': 'ku', 'kurdish (sorani)': 'ckb', 'kyrgyz': 'ky', 'lao': 'lo', 'latin': 'la', 'latvian': 'lv', 'lingala': 'ln', 'lithuanian': 'lt', 'luganda': 'lg', 'luxembourgish': 'lb', 'macedonian': 'mk', 'maithili': 'mai', 'malagasy': 'mg', 'malay': 'ms', 'malayalam': 'ml', 'maltese': 'mt', 'maori': 'mi', 'marathi': 'mr', 'meiteilon (manipuri)': 'mni-Mtei', 'mizo': 'lus', 'mongolian': 'mn', 'myanmar': 'my', 'nepali': 'ne', 'norwegian': 'no', 'odia (oriya)': 'or', 'oromo': 'om', 'pashto': 'ps', 'persian': 'fa', 'polish': 'pl', 'portuguese': 'pt', 'punjabi': 'pa', 'quechua': 'qu', 'romanian': 'ro', 'russian': 'ru', 'samoan': 'sm', 'sanskrit': 'sa', 'scots gaelic': 'gd', 'sepedi': 'nso', 'serbian': 'sr', 'sesotho': 'st', 'shona': 'sn', 'sindhi': 'sd', 'sinhala': 'si', 'slovak': 'sk', 'slovenian': 'sl', 'somali': 'so', 'spanish': 'es', 'sundanese': 'su', 'swahili': 'sw', 'swedish': 'sv', 'tajik': 'tg', 'tamil': 'ta', 'tatar': 'tt', 'telugu': 'te', 'thai': 'th', 'tigrinya': 'ti', 'tsonga': 'ts', 'turkish': 'tr', 'turkmen': 'tk', 'twi': 'ak', 'ukrainian': 'uk', 'urdu': 'ur', 'uyghur': 'ug', 'uzbek': 'uz', 'vietnamese': 'vi', 'welsh': 'cy', 'xhosa': 'xh', 'yiddish': 'yi', 'yoruba': 'yo', 'zulu': 'zu'")
-        langue = input("Quelle langue existante voulez choisire dans la liste du haut : ")
-        translator = GoogleTranslator(from_lang="fr", to_lang=langue)
-
+        #langue = input("Quelle langue existante voulez choisire dans la liste du haut : ")
+        
+        print(i)
+        if i == 1:
+            print(langue2)
+            translator = GoogleTranslator(from_lang="fr", to_lang=langue2)
+            print("in if")
+        else:
+            print(langue)
+            translator = GoogleTranslator(from_lang="fr", to_lang=langue)
+            print("in else")
         # Créer un nouveau fichier Excel pour écrire les résultats
         new_wb = openpyxl.Workbook()
         new_sheet = new_wb.active
@@ -30,7 +83,10 @@ def translate():
                 if cell.value is not None and isinstance(cell.value, str):
                     text_to_translate = cell.value.replace(' ', '_') # Remplacer les espaces par des underscores
                     # Traduction du texte en français
-                    translation = GoogleTranslator(source="auto", target=langue).translate(text_to_translate)
+                    if i == 1:
+                        translation = GoogleTranslator(source="auto", target=langue2).translate(text_to_translate)
+                    else:
+                        translation = GoogleTranslator(source="auto", target=langue).translate(text_to_translate)
                     translation = unidecode(translation)
                     new_sheet.cell(row=row[0].row, column=2).value = translation # Écrire le résultat dans la colonne B du nouveau fichier
                     new_sheet.cell(row=row[0].row, column=1).value = text_to_translate
@@ -38,25 +94,24 @@ def translate():
         rowe += 1
         rowee = str(rowe)
     # Enregistrer le nouveau fichier Excel
-        new_wb.save(f'New_File{rowe}.xlsx')
+        new_wb.save(f'Createur/New_File{rowe}.xlsx')
     print("Bravo Réussi")
+    print("fin translate")
 
-
-def New_File():
-    
-    name_of_language = input("Quelle est le nom de votre langue : ")
-    namexlsx = name_of_language + ".xlsx"
+def New_File(name_of_language):
+    print("début New_File")
+    namexlsx = "Createur/" + name_of_language + ".xlsx"
     print(namexlsx)
     new_file = openpyxl.Workbook()
     aci = new_file.active
     aci['C7'] = "Bonjour"
     new_file.save(namexlsx)
 
-    wb_français = openpyxl.load_workbook('français.xlsx')
+    wb_français = openpyxl.load_workbook('Createur/français.xlsx')
     spanglish = openpyxl.load_workbook(namexlsx)
 
-    wb_file = openpyxl.load_workbook("New_File2.xlsx")
-    wb_file2 = openpyxl.load_workbook("New_File3.xlsx")
+    wb_file = openpyxl.load_workbook("Createur/New_File2.xlsx")
+    wb_file2 = openpyxl.load_workbook("Createur/New_File3.xlsx")
 
     feuille_français = wb_français['Feuille1']
     f_spanglish = spanglish['Sheet']
@@ -127,10 +182,12 @@ def New_File():
 
     # Sauvegarder les modifications apportées au fichier Spanglish.xlsx
     spanglish.save(namexlsx)
+    print("fin New_file")
 
-translate()
-
-New_File()
+"""etim = langue_to_acronyme("french")
+etim2 = langue_to_acronyme("english")
+translate(etim, etim2)
+New_File("spanlish")"""
 
 app = Flask(__name__)
 
@@ -140,7 +197,13 @@ def traduct():
 
         etimologie1 = request.form.get('etimologie1')
         etimologie2 = request.form.get('etimologie2')
-        
+        name_langue = request.form.get('nom_langue')
+        etimologie1e = langue_to_acronyme(etimologie1)
+        etimologie2e = langue_to_acronyme(etimologie2)
+        print(etimologie1e, etimologie2e)
+        translate(etimologie1e, etimologie2e)
+        New_File(name_langue)
+
         return render_template('index.html')
     else:
 
@@ -150,4 +213,4 @@ def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    serve(app, host='0.0.0.0', port=5000, connection_limit=10000, channel_timeout=600)
