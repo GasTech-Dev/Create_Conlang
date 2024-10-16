@@ -158,11 +158,11 @@ def New_File(name_of_language):
                         if new_world[-1] == new_word[0]:
                             if new_world[-1] == "i":
                                    new_world = new_world[:-1] + "y"
-                            new_world = new_world[:-1]
+                            new_world = new_world[:-1]  
                     
                         very_new_word = new_world + new_word
                         compteur = 0
-                        
+
                         very_new_word = very_new_word.lower()
                         # Écrire le mot formaté dans le fichier Spanglish.xlsx
                         f_spanglish.cell(row=row, column=2).value = very_new_word
@@ -184,10 +184,7 @@ def New_File(name_of_language):
     spanglish.save(namexlsx)
     print("fin New_file")
 
-"""etim = langue_to_acronyme("french")
-etim2 = langue_to_acronyme("english")
-translate(etim, etim2)
-New_File("spanlish")"""
+
 
 app = Flask(__name__)
 
@@ -213,4 +210,4 @@ def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    serve(app, host='0.0.0.0', port=5000, connection_limit=10000, channel_timeout=600)
+    serve(app, host='0.0.0.0', port=5000, connection_limit=10000, channel_timeout=86400)
